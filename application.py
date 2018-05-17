@@ -10,14 +10,14 @@ class Application():
         self.width = 0
         self.height = 0
 
-    def initGraphics(self):
+    def init_graphics(self):
         glClearColor(0.9, 0.95, 1.0, 1.0)
         glEnable(GL_DEPTH_TEST)
         glShadeModel(GL_SMOOTH)
 
-        self.setView()
+        self.set_view()
 
-    def setView(self):
+    def set_view(self):
         if self.height <= 0.0:
             self.height = 1
         glMatrixMode(GL_PROJECTION)
@@ -33,7 +33,7 @@ class Application():
         glVertex2i(639, 319)
         glEnd()
 
-    def getTitle(self):
+    def get_title(self):
         return "Space demo"
 
     def deinit(self):
@@ -52,15 +52,15 @@ class Application():
         self.width = width
         self.height = height
         glViewport(0, 0, width, height)
-        self.setView()
+        self.set_view()
 
     def mouse(self, button, state, x, y):
         pass
 
-    def mouseDrag(self, x, y):
+    def mouse_drag(self, x, y):
         pass
 
-    def renderText(self, x, y, text, font=0):
+    def render_text(self, x, y, text, font=0):
         glDisable(GL_DEPTH_TEST)
         glMatrixMode(GL_PROJECTION)
         glPushMatrix()

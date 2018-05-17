@@ -1,9 +1,13 @@
 import logging
 logging.basicConfig()
-from demo import ballistic
+from demo import fireworks
 from application import *
 import sys
-def createWindow(title):
+
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+
+def create_window(title):
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
     glutInitWindowSize(640, 320)
     glutInitWindowPosition(0, 0)
@@ -28,14 +32,14 @@ def keyboard(key, x, y):
     app.key(key)
 
 def motion(x, y):
-    app.mouseDrag(x, y)
+    app.mouse_drag(x, y)
 
 if __name__ == '__main__':
 
     glutInit(sys.argv)
 
-    app = ballistic.getApplication()
-    createWindow(app.getTitle())
+    app = fireworks.getApplication()
+    create_window(app.get_title())
 
     glutReshapeFunc(reshape)
     glutKeyboardFunc(keyboard)
@@ -44,7 +48,7 @@ if __name__ == '__main__':
     glutMouseFunc(mouse)
     glutMotionFunc(motion)
 
-    app.initGraphics()
+    app.init_graphics()
     glutMainLoop()
 
     app.deinit()

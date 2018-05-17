@@ -25,7 +25,7 @@ class BallisticDemo(Application):
         self.currentShotType = currentShotType
 
 
-    def getTitle(self):
+    def get_title(self):
         return "Space > Ballistic Demo"
 
     def fire(self):
@@ -116,18 +116,18 @@ class BallisticDemo(Application):
 
         # Render the description
         glColor3f(0.1, 0.1, 0.1)
-        self.renderText(10.1, 34.1, "Click: Fire\n1-4: Select Ammo")
+        self.render_text(10.1, 34.1, "Click: Fire\n1-4: Select Ammo")
 
         # Render the name of the current shot type
         currentShotType = self.currentShotType
         if currentShotType == PISTOL:
-            self.renderText(10.1, 10.1, "Current Ammo: Pistol")
+            self.render_text(10.1, 10.1, "Current Ammo: Pistol")
         elif currentShotType == ARTILLERY:
-            self.renderText(10.1, 10.1, "Current Ammo: Artillery")
+            self.render_text(10.1, 10.1, "Current Ammo: Artillery")
         elif currentShotType == FIREBALL:
-            self.renderText(10.1, 10.1, "Current Ammo: Fireball")
+            self.render_text(10.1, 10.1, "Current Ammo: Fireball")
         elif currentShotType == LASER:
-            self.renderText(10.1, 10.1, "Current Ammo: Laser")
+            self.render_text(10.1, 10.1, "Current Ammo: Laser")
 
     def mouse(self, button, state, x, y):
         if state == GLUT_DOWN:
