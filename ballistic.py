@@ -5,9 +5,6 @@ logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-from OpenGLContext.context import Context
-from OpenGLContext.events import glutevents
-from OpenGLContext import contextdefinition
 from space.particle import *
 from application import Application
 from timing import TimingData
@@ -24,10 +21,9 @@ class BallisticDemo(Application):
         self.width = 0
         self.height = 0
         self.ammoRounds = 16
-        self.ammo = [AmmoRound()]*self.ammoRounds
+        self.ammo = [AmmoRound() for i in range(0, self.ammoRounds)]
         self.currentShotType = currentShotType
-        for shot in self.ammo:
-            shot.type = UNUSED
+
 
     def getTitle(self):
         return "Space > Ballistic Demo"
@@ -38,7 +34,6 @@ class BallisticDemo(Application):
                 break
         else:
             return
-
         currentShotType = self.currentShotType
         if currentShotType == PISTOL:
             shot.particle.setMass(2.0)
@@ -67,6 +62,7 @@ class BallisticDemo(Application):
         shot.particle.setPosition(0.0, 1.5, 0.0)
         shot.startTime = timing.get().lastFrameTimeStamp
         shot.type = currentShotType
+
 
         shot.particle.clearAccumulator()
 
@@ -142,29 +138,23 @@ class BallisticDemo(Application):
         #self.currentShotType = key
         key = int(key)
         if key == 1:
-            print "1"
             self.currentShotType = PISTOL
         elif key == 2:
-            print "2"
             self.currentShotType = ARTILLERY
         elif key == 3:
-            print "3"
             self.currentShotType = FIREBALL
         elif key == 4:
-            print "4"
             self.currentShotType = LASER
 
-        print self.currentShotType
 class AmmoRound():
         def __init__(self):
             self.particle = Particle()
-            self.type = PISTOL
+            self.type = UNUSED
             self.startTime = 0
 
 
         def render(self):
             position = self.particle.getPosition()
-            print position.x, position.y, position.z
             glColor3f(0, 0, 0)
             glPushMatrix()
             glTranslatef(position.x, position.y, position.z)
