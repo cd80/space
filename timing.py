@@ -1,16 +1,10 @@
 import ctypes
 import ctypes.wintypes
 import time
-import time
+
 # https://stackoverflow.com/questions/38461335/python-2-x-queryperformancecounter-on-windows
 kernel32             = ctypes.WinDLL('kernel32', use_last_error=True)
 
-starting_time        = ctypes.wintypes.LARGE_INTEGER()
-ending_time          = ctypes.wintypes.LARGE_INTEGER()
-elapsed_microseconds = ctypes.wintypes.LARGE_INTEGER()
-frequency            = ctypes.wintypes.LARGE_INTEGER()
-
-kernel32.QueryPerformanceCounter(ctypes.byref(starting_time))
 class TimingData():
     def __init__(self):
         self.frameNumber = 0

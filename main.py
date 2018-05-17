@@ -1,19 +1,8 @@
-from space import *
 import logging
 logging.basicConfig()
-from OpenGL.GL import *
-from OpenGL.GLU import *
-from OpenGL.GLUT import *
-from OpenGL.GLUT.fonts import *
-from OpenGLContext.context import Context
-from OpenGLContext.events import glutevents
-from OpenGLContext import contextdefinition
 import ballistic
-from timing import *
 from application import *
 import sys
-import pygame
-from pygame.locals import *
 def createWindow(title):
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
     glutInitWindowSize(640, 320)

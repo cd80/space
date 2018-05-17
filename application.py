@@ -4,10 +4,6 @@ logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-from OpenGL.GLUT.fonts import *
-from OpenGLContext.context import Context
-from OpenGLContext.events import glutevents
-from OpenGLContext import contextdefinition
 
 class Application():
     def __init__(self):
