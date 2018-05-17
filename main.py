@@ -1,6 +1,6 @@
 import logging
 logging.basicConfig()
-import ballistic
+from demo import ballistic
 from application import *
 import sys
 def createWindow(title):
