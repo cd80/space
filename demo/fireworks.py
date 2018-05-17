@@ -40,7 +40,7 @@ class FireworkRule():
         """
          original prototype in book is create(Firework *firework, Firework *parent)
          but because python doesn't support call-by-reference
-         i made it return new firework
+         i made this to return a new firework
         """
         firework = Firework()
         firework.type = self.type
@@ -102,9 +102,11 @@ class FireworksDemo(Application):
         glClearColor(0.0, 0.0, 0.1, 1.0)
 
     def get_title(self):
+        print "get_title"
         return "Space > Fireworks Demo"
 
     def update(self):
+        timing.update()
         duration = timing.get().lastFrameDuration * 0.001
         if duration <= 0.0:
             return
@@ -210,6 +212,7 @@ class FireworksDemo(Application):
         )
         self.rules[0].payloads[0].set(3, 5)
         self.rules[0].payloads[0].set(5, 5)
+
 
         self.rules[1].init(1)
         self.rules[1].set_parameters(
