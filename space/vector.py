@@ -25,7 +25,7 @@ class Vector3():
             self.z *= (1.0 / l)
 
     """
-    책에는 이 함수가 있지만 그냥 A + 3*B 식으로 쓰는게 더 보기 좋을것 같아 뺌
+    Function is removed because it looks better if we just write A * (3*B)
     def addScaledVector(self, v, scale):
         self.x += v.x * scale
         self.y += v.y * scale
@@ -40,10 +40,11 @@ class Vector3():
         self.x *= v.x
         self.y *= v.y
         self.z *= v.z
-
+    """
+    removed because of the same reason with addScaledVector
     def scalarProduct(self, v):
-        """ 마찬가지로 operator를 사용하는게 더 편해보여 함수 삭제 """
         pass
+    """
 
     def clear(self):
         self.x = 0
@@ -52,10 +53,10 @@ class Vector3():
 
     def __mul__(self, v):
         if isinstance(v, Vector3):
-            # 벡터의 내적 => ret: scalar
+            # Inner product of the vector, ret : scalar
             return self.x*v.x + self.y*v.y + self.z*v.z
         else:
-            # 벡터의 성분곱셈
+            #  Scalar multiplication of vector
             return Vector3(self.x*v, self.y*v, self.z*v)
 
     def __add__(self, v):
@@ -67,7 +68,7 @@ class Vector3():
         return Vector3(self.x-v.x, self.y-v.y, self.z-v.z)
 
     def __mod__(self, v):
-        # 벡터곱
+        # cross product
         return Vector3(self.y*v.z - self.z*v.y, self.z*v.x - self.x*v.z, self.x*v.y - self.y*v.x)
 
     def __str__(self):

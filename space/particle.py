@@ -8,7 +8,7 @@ class Particle():
         self.velocity = vector.Vector3()
         self.acceleration = vector.Vector3()
 
-        # 적분기의 수치연산 오차로 인해 증가한 에너지를 줄여주는 역할
+        # reduces increased energy caused by precision error of integrator
         self.damping = 0.999
 
         self.inverseMass = 0
