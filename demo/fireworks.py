@@ -102,7 +102,6 @@ class FireworksDemo(Application):
         glClearColor(0.0, 0.0, 0.1, 1.0)
 
     def get_title(self):
-        print "get_title"
         return "Space > Fireworks Demo"
 
     def update(self):
