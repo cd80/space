@@ -13,3 +13,6 @@ timing.update() is called in main in the samples of book, but I couldn't find a 
 I tried to implement the functions same as possible to the original cpp code, but you might notice some of the functions are not exactly the same.
 1. AFAIK, python doesn't support function overloading, but still make similar behaviour using `isinstance()`. you might wanna check if the function you are using has already taken care of different argument types or you can implement one of your own
 2. For example, [this function](https://github.com/cd80/space/blob/master/demo/fireworks.py#L189) has its original prototypes in the [author's code](https://github.com/idmillington/cyclone-physics/blob/master/src/demos/fireworks/fireworks.cpp#L356) where there can be number as an argument or not. But it could look better to use if we just make it like `def create(self, type, parent, number=0)`.
+
+# Fireworks Demo
+![](https://github.com/cd80/space/raw/Chapter4_2_Fireworks/fireworks_demo.gif)
