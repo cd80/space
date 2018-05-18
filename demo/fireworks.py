@@ -5,11 +5,14 @@ from application import Application
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from OpenGL.GLUT import *
 from timing import TimingData
 
 timing = TimingData()
 timing.init()
 timing.update()
+
+
 class Firework(Particle, object):
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -21,7 +24,8 @@ class Firework(Particle, object):
         self.age -= duration
         return self.age < 0 or self.position.y < 0
 
-class FireworkRule():
+
+class FireworkRule:
     def __init__(self):
         self.type = 0
         self.min_age = 0
@@ -34,9 +38,9 @@ class FireworkRule():
 
     def init(self, payload_count):
         self.payload_count = payload_count
-        self.payloads = [Payload() for x in range(0, self.payload_count)]
+        self.payloads = [Payload() for _ in range(0, self.payload_count)]
 
-    def create(self, parent=None):
+    def create(self, parent=None, x=None, y=None):
         """
          original prototype in book is create(Firework *firework, Firework *parent)
          but because python doesn't support call-by-reference
@@ -48,48 +52,60 @@ class FireworkRule():
 
         vel = Vector3()
         if parent is not None:
-            firework.setPosition(parent.getPosition())
-            vel += parent.getVelocity()
+            firework.set_position(parent.get_position())
+            vel += parent.get_velocity()
         else:
             start = Vector3()
-            x = random_int(3) - 1
-            start.x = 5.0 * x
-            firework.setPosition(start)
+            if x is not None:
+                print x,
+                start.x = x / (glutGet(GLUT_WINDOW_WIDTH) / 10.0) - 5
+                print start.x
+            else:
+                x = random_int(3) - 1
+                start.x = 5.0 * x
+                print start.x
+
+            firework.set_position(start)
 
         vel += random_vector(self.min_velocity, self.max_velocity)
-        firework.setVelocity(vel)
+        firework.set_velocity(vel)
 
-        firework.setMass(1)
-        firework.setDamping(self.damping)
-        firework.setAcceleration(CONSTANT_GRAVITY)
-        firework.clearAccumulator()
+        firework.set_mass(1)
+        firework.set_damping(self.damping)
+        firework.set_acceleration(CONSTANT_GRAVITY)
+        firework.clear_accumulator()
 
         return firework
 
-    def set_parameters(self, type, min_age, max_age, min_velocity, max_velocity, damping):
-        self.type = type
+    def set_parameters(self, firework_type, min_age, max_age, min_velocity, max_velocity, damping):
+        self.type = firework_type
         self.min_age = min_age
         self.max_age = max_age
         self.min_velocity = min_velocity
         self.max_velocity = max_velocity
         self.damping = damping
 
-class Payload():
+
+class Payload:
     def __init__(self):
         self.type = 0
         self.count = 0
 
-    def set(self, type, count):
-        self.type = type
+    def set(self, firework_type, count):
+        self.type = firework_type
         self.count = count
 
-class FireworksDemo(Application):
+
+class FireworksDemo(Application, object):
     def __init__(self, next_firework=0):
+        super(self.__class__, self).__init__()
         self.max_fireworks = 1024
-        self.fireworks = [Firework() for x in range(0, self.max_fireworks)]
-        self.next_firework = 0
+        self.fireworks = [Firework() for _ in range(0, self.max_fireworks)]
+        self.next_firework = next_firework
         self.rule_count = 9
-        self.rules = [FireworkRule() for x in range(0, self.rule_count)]
+        self.rules = [FireworkRule() for _ in range(0, self.rule_count)]
+        self.mouse_x = 0
+        self.mouse_y = 0
 
         for firework in self.fireworks:
             firework.type = 0
@@ -152,7 +168,7 @@ class FireworksDemo(Application):
             elif firework.type == 9:
                 glColor3f(1, 0.5, 0.5)
 
-            pos = firework.getPosition()
+            pos = firework.get_position()
             glVertex3f(pos.x - size, pos.y - size, pos.z)
             glVertex3f(pos.x + size, pos.y - size, pos.z)
             glVertex3f(pos.x + size, pos.y + size, pos.z)
@@ -164,7 +180,9 @@ class FireworksDemo(Application):
             glVertex3f(pos.x - size, -pos.y + size, pos.z)
         glEnd()
 
-    def key(self, key):
+    def key(self, key, x, y):
+        self.mouse_x = x
+        self.mouse_y = y
         key = int(key)
         if key == 1:
             self.create(1, None, 1)
@@ -185,33 +203,31 @@ class FireworksDemo(Application):
         elif key == 9:
             self.create(9, None, 1)
 
-
-    def create(self, type, parent, number=0):
+    def create(self, firework_type, parent, number=0):
         """
         original prototype was
          1. void create(unsigned type, const Firework *parent=NULL);
          2. void create(unsigned type, unsigned number, const Firework *parent);
         """
         if number == 0:
-            rule = self.rules[type-1]
-            self.fireworks[self.next_firework] = rule.create(parent)
+            rule = self.rules[firework_type-1]
+            self.fireworks[self.next_firework] = rule.create(parent, self.mouse_x)
             self.next_firework = (self.next_firework + 1) % self.max_fireworks
         else:
             for i in range(0, number):
-                self.create(type, parent)
+                self.create(firework_type, parent)
 
     def init_firework_rules(self):
         self.rules[0].init(2)
         self.rules[0].set_parameters(
-            1, # type
-            0.5, 1.4, # age range
-            Vector3(-5, 25, -5), # min velocity
-            Vector3(5, 28, 5), # max velocity
-            0.1 # damping
+            1,  # type
+            0.5, 1.4,  # age range
+            Vector3(-5, 25, -5),  # min velocity
+            Vector3(5, 28, 5),  # max velocity
+            0.1  # damping
         )
         self.rules[0].payloads[0].set(3, 5)
         self.rules[0].payloads[0].set(5, 5)
-
 
         self.rules[1].init(1)
         self.rules[1].set_parameters(
@@ -288,5 +304,6 @@ class FireworksDemo(Application):
             0.95  # damping
         )
 
-def getApplication():
+
+def get_application():
     return FireworksDemo()

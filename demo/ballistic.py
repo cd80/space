@@ -1,13 +1,13 @@
 # -*- coding: utf8 -*-
-from space.vector import *
-import logging
-logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 from space.particle import *
 from application import Application
 from timing import TimingData
+import logging
+logging.basicConfig()
+
 UNUSED = 0
 PISTOL = 1
 ARTILLERY = 2
@@ -16,14 +16,16 @@ LASER = 4
 timing = TimingData()
 timing.init()
 timing.update()
-class BallisticDemo(Application):
-    def __init__(self, currentShotType=PISTOL):
+
+
+class BallisticDemo(Application, object):
+    def __init__(self, current_shot_type=PISTOL):
+        super(self.__class__, self).__init__()
         self.width = 0
         self.height = 0
         self.ammoRounds = 16
-        self.ammo = [AmmoRound() for i in range(0, self.ammoRounds)]
-        self.currentShotType = currentShotType
-
+        self.ammo = [AmmoRound() for _ in range(0, self.ammoRounds)]
+        self.currentShotType = current_shot_type
 
     def get_title(self):
         return "Space > Ballistic Demo"
@@ -34,37 +36,36 @@ class BallisticDemo(Application):
                 break
         else:
             return
-        currentShotType = self.currentShotType
-        if currentShotType == PISTOL:
-            shot.particle.setMass(2.0)
-            shot.particle.setVelocity(0.0, 0.0, 35.0)
-            shot.particle.setAcceleration(0.0, -1.0, 0.0)
-            shot.particle.setDamping(0.99)
+        current_shot_type = self.currentShotType
+        if current_shot_type == PISTOL:
+            shot.particle.set_mass(2.0)
+            shot.particle.set_velocity(0.0, 0.0, 35.0)
+            shot.particle.set_acceleration(0.0, -1.0, 0.0)
+            shot.particle.set_damping(0.99)
 
-        elif currentShotType == ARTILLERY:
-            shot.particle.setMass(200.0)
-            shot.particle.setVelocity(0.0, 30.0, 40.0)
-            shot.particle.setAcceleration(0.0, -20.0, 0.0)
-            shot.particle.setDamping(0.99)
+        elif current_shot_type == ARTILLERY:
+            shot.particle.set_mass(200.0)
+            shot.particle.set_velocity(0.0, 30.0, 40.0)
+            shot.particle.set_acceleration(0.0, -20.0, 0.0)
+            shot.particle.set_damping(0.99)
 
-        elif currentShotType == FIREBALL:
-            shot.particle.setMass(1.0)
-            shot.particle.setVelocity(0.0, 0.0, 10.0)
-            shot.particle.setAcceleration(0.0, 0.6, 0.0)
-            shot.particle.setDamping(0.99)
+        elif current_shot_type == FIREBALL:
+            shot.particle.set_mass(1.0)
+            shot.particle.set_velocity(0.0, 0.0, 10.0)
+            shot.particle.set_acceleration(0.0, 0.6, 0.0)
+            shot.particle.set_damping(0.99)
 
-        elif currentShotType == LASER:
-            shot.particle.setMass(0.1)
-            shot.particle.setVelocity(0.0, 0.0, 100.0)
-            shot.particle.setAcceleration(0.0, 0.0, 0.0)
-            shot.particle.setDamping(0.99)
+        elif current_shot_type == LASER:
+            shot.particle.set_mass(0.1)
+            shot.particle.set_velocity(0.0, 0.0, 100.0)
+            shot.particle.set_acceleration(0.0, 0.0, 0.0)
+            shot.particle.set_damping(0.99)
 
-        shot.particle.setPosition(0.0, 1.5, 0.0)
+        shot.particle.set_position(0.0, 1.5, 0.0)
         shot.startTime = timing.get().lastFrameTimeStamp
-        shot.type = currentShotType
+        shot.type = current_shot_type
 
-
-        shot.particle.clearAccumulator()
+        shot.particle.clear_accumulator()
 
     def update(self):
         timing.update()
@@ -76,9 +77,9 @@ class BallisticDemo(Application):
             if shot.type != UNUSED:
                 shot.particle.integrate(duration)
 
-                if shot.particle.getPosition().y < 0.0 or \
-                    shot.startTime+5000 < timing.get().lastFrameTimeStamp or \
-                    shot.particle.getPosition().z > 200.0:
+                if shot.particle.get_position().y < 0.0 or \
+                   shot.startTime+5000 < timing.get().lastFrameTimeStamp or \
+                   shot.particle.get_position().z > 200.0:
                     shot.type = UNUSED
         Application().update()
 
@@ -113,29 +114,26 @@ class BallisticDemo(Application):
             if shot.type != UNUSED:
                 shot.render()
 
-
         # Render the description
         glColor3f(0.1, 0.1, 0.1)
         self.render_text(10.1, 34.1, "Click: Fire\n1-4: Select Ammo")
 
         # Render the name of the current shot type
-        currentShotType = self.currentShotType
-        if currentShotType == PISTOL:
+        current_shot_type = self.currentShotType
+        if current_shot_type == PISTOL:
             self.render_text(10.1, 10.1, "Current Ammo: Pistol")
-        elif currentShotType == ARTILLERY:
+        elif current_shot_type == ARTILLERY:
             self.render_text(10.1, 10.1, "Current Ammo: Artillery")
-        elif currentShotType == FIREBALL:
+        elif current_shot_type == FIREBALL:
             self.render_text(10.1, 10.1, "Current Ammo: Fireball")
-        elif currentShotType == LASER:
+        elif current_shot_type == LASER:
             self.render_text(10.1, 10.1, "Current Ammo: Laser")
 
     def mouse(self, button, state, x, y):
         if state == GLUT_DOWN:
             self.fire()
 
-    def key(self, key):
-        currentShotType = self.currentShotType
-        #self.currentShotType = key
+    def key(self, key, x, y):
         key = int(key)
         if key == 1:
             self.currentShotType = PISTOL
@@ -146,15 +144,15 @@ class BallisticDemo(Application):
         elif key == 4:
             self.currentShotType = LASER
 
-class AmmoRound():
+
+class AmmoRound:
         def __init__(self):
             self.particle = Particle()
             self.type = UNUSED
             self.startTime = 0
 
-
         def render(self):
-            position = self.particle.getPosition()
+            position = self.particle.get_position()
             glColor3f(0, 0, 0)
             glPushMatrix()
             glTranslatef(position.x, position.y, position.z)
@@ -168,5 +166,5 @@ class AmmoRound():
             glPopMatrix()
 
 
-def getApplication():
+def get_application():
     return BallisticDemo()

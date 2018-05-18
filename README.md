@@ -1,12 +1,12 @@
 # space
 my python version of sample codes in Game Physics Engine Development  
-also implemented ommitted portions of source codes with help of [author's repository](https://github.com/idmillington/cyclone-physics)  
+also implemented omitted portions of source codes with help of [author's repository](https://github.com/idmillington/cyclone-physics)
 all the codes are organized in each branches that corresponds to each chapter or example in the book  
 check the branches
 
 # Issues
 ### 1. Speed
-If your code looks too fast or not working properly, you might not have initialized TimingData() or didn't call timing.update() in your overrided update() function.
+If your code looks too fast or not working properly, you might not have initialized TimingData() or didn't call timing.update() in your overridden update() function.
 timing.update() is called in main in the samples of book, but I couldn't find a way to share the variable between two modules like `extern TimingData timing;` in CPP, so each demo should have its own TimingData instance
 
 ### 2. Changes in some of the function prototypes

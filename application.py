@@ -1,11 +1,12 @@
-from space import *
-import logging
-logging.basicConfig()
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-class Application():
+import logging
+logging.basicConfig()
+
+
+class Application:
     def __init__(self):
         self.width = 0
         self.height = 0
@@ -42,7 +43,7 @@ class Application():
     def update(self):
         glutPostRedisplay()
 
-    def key(self, key):
+    def key(self, key, x, y):
         pass
 
     def resize(self, width, height):
@@ -125,7 +126,7 @@ def display(self):
         p != particles.end()
         p++)
         cyclone.Particle *particle = *p
-         cyclone.Vector3 &pos = particle.getPosition()
+         cyclone.Vector3 &pos = particle.get_position()
         glPushMatrix()
         glTranslatef(pos.x, pos.y, pos.z)
         glutSolidSphere(0.1f, 20, 10)

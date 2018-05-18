@@ -1,6 +1,8 @@
 # -*- coding: utf8 -*-
 import numpy
-class Vector3():
+
+
+class Vector3:
     def __init__(self, x=0, y=0, z=0):
         self.x = x
         self.y = y
@@ -14,7 +16,7 @@ class Vector3():
     def magnitude(self):
         return numpy.sqrt(self.x**2 + self.y**2 + self.z**2)
 
-    def squareMagnitude(self):
+    def square_magnitude(self):
         return self.x**2 + self.y**2 + self.z**2
 
     def normalize(self):
@@ -32,11 +34,11 @@ class Vector3():
         self.z += v.z * scale
     """
 
-    def componentProduct(self, v):
+    def component_product(self, v):
         assert(type(v) == type(self))
         return Vector3(self.x * v.x, self.y * v.y, self.z * v.z)
 
-    def componentProductUpdate(self, v):
+    def component_product_update(self, v):
         self.x *= v.x
         self.y *= v.y
         self.z *= v.z
@@ -73,17 +75,4 @@ class Vector3():
 
     def __str__(self):
         return "{} {} {}".format(self.x, self.y, self.z)
-def makeOrthonormalBasis(v1, v2):
-    v1.normalize()
-    v3 = v1 % v2
-    if v3.squareMagnitude() == 0.0:
-        return
-    v3.normalize()
-    v2 = v3 % v1
-    return v3
 
-if __name__ == '__main__':
-    # testing codes
-    v1 = Vector3(1, 0, 0)
-    v2 = Vector3(0, 1, 0)
-    v3 = makeOrthonormalBasis(v1, v2)

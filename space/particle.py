@@ -2,7 +2,9 @@
 import numpy
 from space import vector
 import sys
-class Particle():
+
+
+class Particle:
     def __init__(self):
         self.position = vector.Vector3()
         self.velocity = vector.Vector3()
@@ -25,34 +27,34 @@ class Particle():
         self.velocity += resulting_acc * duration
         self.velocity *= numpy.power(self.damping, duration)
 
-        self.clearAccumulator()
+        self.clear_accumulator()
 
-    def setMass(self, mass):
+    def set_mass(self, mass):
         assert(mass != 0)
         self.inverseMass = 1.0/mass
 
-    def getMass(self):
+    def get_mass(self):
         if self.inverseMass == 0:
             return sys.float_info.max
         else:
             return 1.0/self.inverseMass
 
-    def setInverseMass(self, inverseMass):
-        self.inverseMass = inverseMass
+    def set_inverse_mass(self, inverse_mass):
+        self.inverseMass = inverse_mass
 
-    def getInverseMass(self):
+    def get_inverse_mass(self):
         return self.inverseMass
 
-    def hasFiniteMass(self):
+    def has_finite_mass(self):
         return self.inverseMass >= 0.0
 
-    def setDamping(self, damping):
+    def set_damping(self, damping):
         self.damping = damping
 
-    def getDamping(self):
+    def get_damping(self):
         return self.damping
 
-    def setPosition(self, x, y=0, z=0):
+    def set_position(self, x, y=0, z=0):
         if isinstance(x, vector.Vector3):
             self.position = x
         else:
@@ -60,10 +62,10 @@ class Particle():
             self.position.y = y
             self.position.z = z
 
-    def getPosition(self):
+    def get_position(self):
         return self.position
 
-    def setVelocity(self, x, y=0, z=0):
+    def set_velocity(self, x, y=0, z=0):
         if isinstance(x, vector.Vector3):
             self.velocity = x
         else:
@@ -71,10 +73,10 @@ class Particle():
             self.velocity.y = y
             self.velocity.z = z
 
-    def getVelocity(self):
+    def get_velocity(self):
         return self.velocity
 
-    def setAcceleration(self, x, y=0, z=0):
+    def set_acceleration(self, x, y=0, z=0):
         if isinstance(x, vector.Vector3):
             self.acceleration = x
         else:
@@ -82,11 +84,11 @@ class Particle():
             self.acceleration.y = y
             self.acceleration.z = z
 
-    def getAcceleration(self):
+    def get_acceleration(self):
         return self.acceleration
 
-    def clearAccumulator(self):
+    def clear_accumulator(self):
         self.forceAccum.clear()
 
-    def addForce(self, force):
+    def add_force(self, force):
         self.forceAccum += force
