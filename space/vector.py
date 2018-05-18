@@ -69,7 +69,7 @@ class Vector3():
         return Vector3(self.x-v.x, self.y-v.y, self.z-v.z)
 
     def __mod__(self, v):
-        # 벡터곱
+        # cross product
         return Vector3(self.y*v.z - self.z*v.y, self.z*v.x - self.x*v.z, self.x*v.y - self.y*v.x)
 
     def __str__(self):

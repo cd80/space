@@ -8,7 +8,7 @@ class Particle():
         self.velocity = vector.Vector3()
         self.acceleration = vector.Vector3()
 
-        # reduces increased energy due to precision error of integrator
+        # reduces increased energy caused by precision error of integrator
         self.damping = 0.999
 
         self.inverseMass = 0
