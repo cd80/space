@@ -1,5 +1,5 @@
 ### Suspended
-I've got into trouble with mathematics with understanding physics i want to put in the engine that are not in the book.  
+I've got trouble with mathematics for understanding physics i want to put in the engine that are not in the book.  
 I'm stopping development until I get enough base knowledge in mathematics.
 
 
