@@ -1,3 +1,8 @@
+### Suspended
+I've got into trouble with mathematics with understanding physics i want to put in the engine that are not in the book.  
+I'm stopping development until I get enough base knowledge in mathematics.
+
+
 # space
 my python version of sample codes in Game Physics Engine Development  
 also implemented omitted portions of source codes with help of [author's repository](https://github.com/idmillington/cyclone-physics)
